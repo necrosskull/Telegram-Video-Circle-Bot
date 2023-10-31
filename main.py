@@ -6,6 +6,7 @@ from handlers import start, process_video
 
 def main():
     logging.basicConfig(level=logging.INFO)
+    logging.getLogger("httpx").setLevel(logging.WARNING)
 
     dp = Application.builder().token(API_TOKEN).build()
 

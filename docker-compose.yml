@@ -1,0 +1,7 @@
+version: '3'
+services:
+  round-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped

@@ -1,2 +1,6 @@
-# Замените следующую строку на ваш токен API
-API_TOKEN = "YOUR_API_TOKEN"
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+API_TOKEN = os.getenv("TELEGRAM_TOKEN")

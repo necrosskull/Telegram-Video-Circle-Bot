@@ -1,4 +1,7 @@
-from moviepy.editor import *
+import os
+
+from moviepy.editor import VideoFileClip, concatenate_videoclips
+import moviepy.editor as mp
 from telegram import Update, InputMediaVideo
 from telegram.ext import CallbackContext
 
@@ -7,10 +10,13 @@ async def start(update: Update, context: CallbackContext):
 
 async def process_video(update: Update, context: CallbackContext):
     video_file = await context.bot.getFile(update.message.video.file_id)
-    await video_file.download("input_video.mp4")
+    await video_file.download_to_drive("input_video.mp4")
+
+    # Отправлять состояние обработки видео
+    await context.bot.send_chat_action(chat_id=update.message.chat_id, action="RECORD_VIDEO_NOTE")
 
     # Prеобразование видео в видеокружок
-    input_video = VideoFileClip("input_video.mp4")
+    input_video = mp.VideoFileClip("input_video.mp4")
     w, h = input_video.size
     circle_size = 360
     aspect_ratio = float(w) / float(h)
@@ -29,3 +35,7 @@ async def process_video(update: Update, context: CallbackContext):
     # Отправка видеокружка в чат
     with open("output_video.mp4", "rb") as video:
         await context.bot.send_video_note(chat_id=update.message.chat_id, video_note=video, duration=int(output_video.duration), length=circle_size)
+
+    # Удаление видео с сервера
+    os.remove("input_video.mp4")
+    os.remove("output_video.mp4")
