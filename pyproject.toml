@@ -12,6 +12,7 @@ python-telegram-bot = "20.6"
 moviepy = "^1.0.3"
 opencv-python = "^4.8.1.78"
 python-dotenv = "^1.0.0"
+pillow = "^10.1.0"
 
 
 [build-system]
