@@ -11,8 +11,8 @@ def main():
 
     dp = Application.builder().token(API_TOKEN).build()
 
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(MessageHandler(filters.VIDEO, process_video))
+    dp.add_handler(CommandHandler("start", start, block=False))
+    dp.add_handler(MessageHandler(filters.VIDEO, process_video, block=False))
 
     dp.run_polling(allowed_updates=Update.ALL_TYPES, stop_signals=None)
 
